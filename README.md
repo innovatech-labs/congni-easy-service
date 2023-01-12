@@ -6,7 +6,9 @@
 1. Clone this git repository to your local computer
 2. In the project repo, create a virtual environment by running `python3 -m venv ./venv` in your 
    terminal
-3. Run the virtual environment by running `.\venv\Scripts\activate.bat` in your terminal
+3. Run the virtual environment
+  - Windows: Run `.\venv\Scripts\activate.bat`
+  - Mac: Run `source venv/bin/activate`
 4. install dependencies by running `pip install -r requirements.txt` in the virtual environment
 
 
