@@ -11,6 +11,9 @@
   - Mac: Run `source venv/bin/activate`
 4. install dependencies by running `pip install -r requirements.txt` in the virtual environment
 
+### OpenAI setup
+1. Create a .env file in your root folder
+2. Put `OPENAI_API_KEY="your-open-ai-api-key"` in your root folder
 
 ## Development
 Run this service by running `uvicorn main:app --reload`
