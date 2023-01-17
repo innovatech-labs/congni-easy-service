@@ -2,6 +2,7 @@ from typing import Union
 
 from fastapi import FastAPI
 from pydantic import BaseModel
+import open_ai
 
 app = FastAPI()
 
@@ -15,6 +16,12 @@ class Item(BaseModel):
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
+
+
+@app.get("/completion/{prompt}")
+def get_completion(prompt: str):
+    result = open_ai.text_completion(prompt)
+    return result.choices[0].text
 
 
 @app.get("/items/{item_id}")
