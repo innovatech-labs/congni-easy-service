@@ -35,9 +35,12 @@ def get_model_info(model_name):
 
 def text_completion(
         prompt: Union[str, list[str]],
-        model=BABBAGE,
-        max_tokens=16,
-        temperature=0,
+        model: str = BABBAGE,
+        max_tokens: int = 16,
+        temperature: float = 0,
+        top_p: float = 1,
+        presence_penalty: float = 0,
+        frequency_penalty: float = 0,
         n=1,
         stream=False,
         logprobs: int = None,
@@ -52,12 +55,23 @@ def text_completion(
 
     :param prompt: The prompt(s) to generate completions for, encoded as a string, array of strings,
         array of tokens, or array of token arrays.
+    :param model: ID of the model to use.
     :param max_tokens: The maximum number of tokens to generate in the completion. The token
         count of your prompt plus max_tokens cannot exceed the model's context
         length.
     :param temperature:What sampling temperature to use. Higher values means the model will take
         more risks. Try 0.9 for more creative applications, and 0 (argmax sampling) for ones with a
         well-defined answer.
+    :param top_p: An alternative to sampling with temperature, called nucleus sampling, where the
+        model considers the results of the tokens with top_p probability mass. So 0.1 means only the
+        tokens comprising the top 10% probability mass are considered. We generally recommend
+        altering this or temperature but not both.
+    :param presence_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens
+        based on whether they appear in the text so far, increasing the model's likelihood to
+        talk about new topics.
+    :param frequency_penalty: Number between -2.0 and 2.0. Positive values penalize new tokens
+        based on their existing frequency in the text so far, decreasing the model's likelihood
+        to repeat the same line verbatim.
     :param n: How many completions to generate for each prompt.
     :param stream:Whether to stream back partial progress. If set, tokens will be sent as
         data-only  server-sent events as they become available, with the stream terminated by a
@@ -75,6 +89,9 @@ def text_completion(
         prompt=prompt,
         max_tokens=max_tokens,
         temperature=temperature,
+        presence_penalty=presence_penalty,
+        frequency_penalty=frequency_penalty,
+        top_p=top_p,
         n=n,
         stream=stream,
         logprobs=logprobs,
