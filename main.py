@@ -13,6 +13,12 @@ class Item(BaseModel):
     is_offer: Union[bool, None] = None
 
 
+class CoverLetterInfo(BaseModel):
+    resume: str
+    job_posting: str
+    past_experiences: Union[str, None] = None
+
+
 @app.get("/")
 def read_root():
     return {"Hello": "World"}
@@ -32,3 +38,9 @@ def read_item(item_id: int, q: Union[str, None] = None):
 @app.put("/items/{item_id}")
 def update_item(item_id: int, item: Item):
     return {"item_name": item.name, "item_id": item_id}
+
+
+@app.post("/cover_letter")
+def create_cover_letter(cover_letter_info: CoverLetterInfo):
+    return open_ai.generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
+                                         cover_letter_info.past_experiences)
