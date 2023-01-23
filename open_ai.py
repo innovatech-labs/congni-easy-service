@@ -98,3 +98,44 @@ def text_completion(
         stop=stop,
     )
     return result
+
+
+def get_cover_letter_prompt(resume: str, job_posting: str, past_experiences: str = None):
+    past_experiences_string = f'\n\nPast Experiences:\n{past_experiences}'
+    prompt = f"You are a career advisor. " \
+             f"You have been helping people land life changing jobs for the past 20 years. " \
+             f"You are tasked with helping candidates writes cover letters for jobs they are " \
+             f"applying to. You will be given a job posting, " \
+             f"{'a collection of past experiences, ' if past_experiences else ''}" \
+             f"and a resume. You will produce a cover letter that is based on the resume, " \
+             f"{'the past experiences, ' if past_experiences else ''}" \
+             f"and the job posting. Do not include experiences from projects that are not " \
+             f"mentioned in the resume." \
+             f"\n\nResume:\n{resume}" \
+             f"{past_experiences_string if past_experiences else ''}" \
+             f"\n\nJob Posting:\n{job_posting}" \
+             f"\n\nCover Letter:\n"
+    return prompt
+
+
+def generate_cover_letter(resume: str, job_posting: str, past_experiences: str = None):
+    if not resume or len(resume) > 700:
+        print("bad resume")
+        return
+    if not job_posting or len(job_posting) > 700:
+        print("bad job_posting")
+        return
+    if past_experiences and len(past_experiences) > 700:
+        print("bad past_experiences")
+        return
+
+    prompt = get_cover_letter_prompt(resume, job_posting, past_experiences)
+    result = text_completion(
+        prompt=prompt,
+        model=DAVINCI,
+        max_tokens=1500,
+        temperature=0.5,
+        presence_penalty=0.75,
+        frequency_penalty=0.75
+    )
+    return result.choices[0].text
