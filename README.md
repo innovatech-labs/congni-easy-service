@@ -17,6 +17,7 @@
 
 ## Development
 Run this service by running `uvicorn main:app --reload`
+- If you have [docker](https://docs.docker.com/get-docker/) and [docker-compose](https://docs.docker.com/compose/install/) installed, the service could be started by running `docker-compose up -d`
 
 The server will be available through http://127.0.0.1:8000/
 
