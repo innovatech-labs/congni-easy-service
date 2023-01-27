@@ -4,4 +4,4 @@ services:
   cogni-service:
     build: .
     ports:
-      - "8000:80" # uncomment to map port 8000 of local machine
+      - "8000:80"
