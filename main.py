@@ -1,7 +1,7 @@
 from typing import Union
-
 from fastapi import FastAPI
 from pydantic import BaseModel
+from mangum import Mangum
 import open_ai
 
 app = FastAPI()
@@ -44,3 +44,5 @@ def update_item(item_id: int, item: Item):
 def create_cover_letter(cover_letter_info: CoverLetterInfo):
     return open_ai.generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
                                          cover_letter_info.past_experiences)
+
+handler = Mangum(app)
