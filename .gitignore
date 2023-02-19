@@ -3,6 +3,12 @@
 # virtual environment
 /venv/
 
+# Dependencies
+/lib/
+
+# Zip files for deployment
+*.zip
+
 # IDE generated files
 /.idea/
 
