@@ -51,7 +51,8 @@ def update_item(item_id: int, item: Item):
 
 @app.post("/cover_letter")
 def create_cover_letter(cover_letter_info: CoverLetterInfo):
-    return open_ai.generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
+    cover_letter = open_ai.generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
                                          cover_letter_info.past_experiences)
+    return {"result" : cover_letter}
 
 handler = Mangum(app)
