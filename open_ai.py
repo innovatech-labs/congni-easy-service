@@ -138,4 +138,5 @@ def generate_cover_letter(resume: str, job_posting: str, past_experiences: str =
         presence_penalty=0.75,
         frequency_penalty=0.75
     )
+    print("Cover Letter Generated")
     return result.choices[0].text
