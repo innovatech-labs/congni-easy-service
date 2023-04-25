@@ -1,20 +1,19 @@
 from typing import Union
-
 from fastapi import FastAPI
-from starlette.middleware.cors import CORSMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import open_ai
+from mangum import Mangum
+from open_ai import *
 
 app = FastAPI()
 
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
+if IS_LOCAL_ENV:
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=['*'],
+        allow_methods=['*'],
+        allow_headers=['*'],
+    )    
 
 class Item(BaseModel):
     name: str
@@ -35,7 +34,7 @@ def read_root():
 
 @app.get("/completion/{prompt}")
 def get_completion(prompt: str):
-    result = open_ai.text_completion(prompt)
+    result = text_completion(prompt)
     return result.choices[0].text
 
 
@@ -51,5 +50,8 @@ def update_item(item_id: int, item: Item):
 
 @app.post("/cover_letter")
 def create_cover_letter(cover_letter_info: CoverLetterInfo):
-    return open_ai.generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
+    cover_letter = generate_cover_letter(cover_letter_info.resume, cover_letter_info.job_posting,
                                          cover_letter_info.past_experiences)
+    return {"result" : cover_letter}
+
+handler = Mangum(app)

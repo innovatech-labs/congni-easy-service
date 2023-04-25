@@ -1,9 +1,13 @@
 import os
 import openai
 from dotenv import load_dotenv
-from typing import Union
+from typing import Union, List
 
-load_dotenv()
+IS_LOCAL_ENV = os.path.exists(".env")
+
+if IS_LOCAL_ENV:
+    load_dotenv()
+    
 openai.organization = "org-JXuF0c8m0LBGctd5KgIg1BN1"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -34,7 +38,7 @@ def get_model_info(model_name):
 
 
 def text_completion(
-        prompt: Union[str, list[str]],
+        prompt: Union[str, List[str]],
         model: str = BABBAGE,
         max_tokens: int = 16,
         temperature: float = 0,
@@ -44,7 +48,7 @@ def text_completion(
         n=1,
         stream=False,
         logprobs: int = None,
-        stop: Union[str, list[str]] = None, ):
+        stop: Union[str, List[str]] = None, ):
     """
     Calls GPT-3 completion API
 
