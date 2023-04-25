@@ -3,7 +3,9 @@ import openai
 from dotenv import load_dotenv
 from typing import Union
 
-load_dotenv()
+if os.path.exists(".env"):
+    load_dotenv()
+
 openai.organization = "org-JXuF0c8m0LBGctd5KgIg1BN1"
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
