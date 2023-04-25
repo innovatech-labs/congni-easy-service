@@ -43,20 +43,20 @@ jobs:
 
           docker push $ECR_REGISTRY_URI/$IMAGE_NAME:$IMAGE_TAG
 
-      # - name: Redeploy Lambda function
-      #   env:
-      #     AWS_REGION: ${{ env.AWS_REGION }}
-      #     FUNCTION_NAME: ${{ env.LAMBDA_FUNCTION_NAME }}
-      #     ECR_REGISTRY_URI: ${{ env.ECR_REGISTRY_URI }}
-      #     IMAGE_NAME: ${{ env.ECR_IMAGE_NAME }}
-      #     IMAGE_TAG: latest
-      #   run: |
-      #     aws lambda update-function-code \
-      #       --function-name $FUNCTION_NAME \
-      #       --image-uri $ECR_REGISTRY_URI/$IMAGE_NAME:$IMAGE_TAG \
-      #       --region $AWS_REGION
+      - name: Redeploy Lambda function
+        env:
+          AWS_REGION: ${{ env.AWS_REGION }}
+          FUNCTION_NAME: ${{ env.LAMBDA_FUNCTION_NAME }}
+          ECR_REGISTRY_URI: ${{ env.ECR_REGISTRY_URI }}
+          IMAGE_NAME: ${{ env.ECR_IMAGE_NAME }}
+          IMAGE_TAG: latest
+        run: |
+          aws lambda update-function-code \
+            --function-name $FUNCTION_NAME \
+            --image-uri $ECR_REGISTRY_URI/$IMAGE_NAME:$IMAGE_TAG \
+            --region $AWS_REGION
 
-      #     aws lambda wait function-updated --function-name $FUNCTION_NAME
+          aws lambda wait function-updated --function-name $FUNCTION_NAME
 
       - name: Remove obsolete untagged ECR images
         env:

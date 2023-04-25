@@ -2,17 +2,10 @@
 
 # virtual environment
 /venv/
-
-# Dependencies
-/lib/
-
-# Zip files for deployment
-*.zip
+/__pycache__/
 
 # IDE generated files
 /.idea/
 
 # API keys
 /.env
-__pycache__/main.cpython-311.pyc
-__pycache__/open_ai.cpython-311.pyc
