@@ -3,7 +3,9 @@ import openai
 from dotenv import load_dotenv
 from typing import Union, List
 
-if os.path.exists(".env"):
+IS_LOCAL_ENV = os.path.exists(".env")
+
+if IS_LOCAL_ENV:
     load_dotenv()
     
 openai.organization = "org-JXuF0c8m0LBGctd5KgIg1BN1"
